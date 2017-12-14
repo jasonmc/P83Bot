@@ -1,0 +1,25 @@
+type project
+title
+    P83Bot
+owners
+    Author not set
+authors 
+    Author not set
+projectUrl
+    https://github.com/[github-user]/P83Bot
+iconUrl
+    https://raw.githubusercontent.com/[github-user]/P83Bot/master/docs/files/img/logo.png
+licenseUrl
+    https://github.com/[github-user]/P83Bot/blob/master/LICENSE.txt
+requireLicenseAcceptance
+    false
+copyright
+    Copyright 2015
+tags
+    fsharp
+summary
+    Summary not set
+description
+    Description not set
+
+
