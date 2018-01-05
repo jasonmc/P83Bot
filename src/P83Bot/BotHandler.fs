@@ -22,7 +22,7 @@ open NodaTime
 open System
 open System.Globalization
 
-type Response = 
+type Response =
   | Text of string
   | Location of float * float * string
   | Image of string
@@ -54,9 +54,9 @@ let (|TryToInt|_|) s =
   | false, _ -> None
 
 let getRule (ruleSet : Async<string list * Instant>) text = asyncSeq {
-  let! r = ruleSet |> Async.map fst 
+  let! r = ruleSet |> Async.map fst
   yield (match text with
-         | TryToInt n when (n > 0 && n <= r.Length) 
+         | TryToInt n when (n > 0 && n <= r.Length)
              -> (List.item (n-1) r) |> (fun r -> if r = "" then "<blank>" else r)
          | _ -> "no such rule...") |> Text
 }
@@ -72,7 +72,7 @@ let randomLoc () = asyncSeq {
   let rnd = Random()
   let locs = [(40.7195654,-73.9457874, "hell"); (40.6593619,-73.9878565, "Greenwood");
               (40.6762108,-73.9835355,"misson dolores"); (40.7435403,-73.9536081,"Dominie's Hoek")]
-  let first = List.item (rnd.Next(locs.Length)) locs 
+  let first = List.item (rnd.Next(locs.Length)) locs
   yield first |> Location
   do! Async.Sleep 10000
   let second = List.item (rnd.Next(locs.Length)) locs
@@ -125,6 +125,6 @@ let parseAndReply text sender isBot =
       | IgnoreCase("uptime") true -> uptime () |> Text |> asyncSeq.Yield
       | Prefix("wait") w -> wait w
       | _ -> Text "Huh?" |> asyncSeq.Yield
-  | Contains("R Bar") true when not isBot -> sprintf "@%s Anything but R Bar" sender |> Text |> asyncSeq.Yield
+  | Contains("R Bar") true when not isBot -> sprintf "@%s R Bar is dead. Long live R Bar!" sender |> Text |> asyncSeq.Yield
   | Contains("Here's a pun:") true -> "shut the fuck up" |> Text |> asyncSeq.Yield
   | _ -> asyncSeq.Zero ()
