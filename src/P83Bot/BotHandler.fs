@@ -83,7 +83,7 @@ let randomLoc () = asyncSeq {
 
 let wait t = asyncSeq {
   match t with
-  | TryToInt n -> yield Text (sprintf "Going to wait %d seconds" n)
+  | .83 | TryToInt n -> yield Text (sprintf "Going to wait %d seconds" n)
                   do! Async.Sleep (n*1000)
                   yield Text (sprintf "waited %d seconds" n)
   | _ -> yield Text "not a valid amount"
