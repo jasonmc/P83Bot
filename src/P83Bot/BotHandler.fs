@@ -53,6 +53,11 @@ let (|TryToInt|_|) s =
   | true, v -> Some v
   | false, _ -> None
 
+let (|TryToFloat|_|) s =
+  match System.Double.TryParse s with
+  | true, v -> Some v
+  | false, _ -> None
+
 let getRule (ruleSet : Async<string list * Instant>) text = asyncSeq {
   let! r = ruleSet |> Async.map fst
   yield (match text with
@@ -83,9 +88,9 @@ let randomLoc () = asyncSeq {
 
 let wait t = asyncSeq {
   match t with
-  | .83 | TryToInt n -> yield Text (sprintf "Going to wait %d seconds" n)
-                  do! Async.Sleep (n*1000)
-                  yield Text (sprintf "waited %d seconds" n)
+  | TryToFloat n -> yield Text (sprintf "Going to wait %g seconds" n)
+                    do! Async.Sleep (Convert.ToInt32(n*1000.0))
+                    yield Text (sprintf "waited %g seconds" n)
   | _ -> yield Text "not a valid amount"
 }
 
