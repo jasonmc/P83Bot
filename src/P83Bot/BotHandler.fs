@@ -128,6 +128,7 @@ let parseAndReply text sender isBot =
       | IgnoreCase("somewhere") true -> randomLoc ()
       | IgnoreCase("swayze") true -> Image swayzeImage |> asyncSeq.Yield
       | IgnoreCase("uptime") true -> uptime () |> Text |> asyncSeq.Yield
+      | IgnoreCase("mikkeller nyc menu") true -> Mikkeller.getMenu () |> Async.map Text |> asyncToAsyncSeq
       | Prefix("wait") w -> wait w
       | _ -> Text "Huh?" |> asyncSeq.Yield
   | Contains(" R Bar") true when not isBot -> sprintf "@%s R Bar is dead. Long live R Bar!" sender |> Text |> asyncSeq.Yield

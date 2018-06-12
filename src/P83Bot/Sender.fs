@@ -20,6 +20,7 @@ open Chiron
 open Chiron.Operators
 open FSharp.Data
 open FSharp.Data.HttpRequestHeaders
+open System.Text
 
 type Attachment = {Type: string; Lat: float option; Lon: float option; Name: string option; Url : string option}
                   static member ToJson (x:Attachment) =
@@ -42,7 +43,7 @@ let doSend botId text attachments =
             |> Json.serialize |> Json.format
   Http.AsyncRequestString
     ( "https://api.groupme.com/v3/bots/post", 
-      headers = [ ContentType HttpContentTypes.Json ],
+      headers = [ ContentTypeWithEncoding (HttpContentTypes.Json, Encoding.UTF8) ],
       body = TextRequest req) |> Async.Ignore
 
 let sendMsg botId message =
@@ -55,3 +56,4 @@ let sendLocation botId text lat lon locName =
 let sendImage botId text url =
   let attachment = {Type = "image" ; Lat = None; Lon = None; Name = None; Url = Some url}
   doSend botId text (Some [|attachment|])
+  

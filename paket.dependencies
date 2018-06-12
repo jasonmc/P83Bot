@@ -13,6 +13,7 @@ nuget FSharp.Configuration
 nuget FSharp.Control.AsyncSeq
 nuget FSharp.Core ~> 4.0.0.1 redirects: force
 nuget FSharp.Data
+nuget HtmlAgilityPack
 nuget NodaTime
 nuget Suave
 
