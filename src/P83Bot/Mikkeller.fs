@@ -22,8 +22,9 @@ let getMenu ()  = async {
     let! page = FSharp.Data.Http.AsyncRequestString "https://www.mikkellernyc.com/menus/"
     let doc = new HtmlDocument()
     doc.LoadHtml(page)
-    return (doc.DocumentNode.SelectNodes("//section[@id='on-draft']//h3[contains(@class, 'menu-item__heading')]")
+    return doc.DocumentNode.SelectNodes("//section[@id='on-draft']//h3[contains(@class, 'menu-item__heading')]")
            |> Seq.map (fun x -> x.InnerText)
-           |> String.concat "\n")
-           .[0..999]
+           |> String.concat "\n"
+           |> Seq.chunkBySize 1000
+           |> Seq.map (fun x -> System.String(x))
 }
