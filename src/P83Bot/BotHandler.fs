@@ -132,5 +132,6 @@ let parseAndReply text sender isBot =
       | Prefix("wait") w -> wait w
       | _ -> Text "Huh?" |> asyncSeq.Yield
   | Contains(" R Bar") true when not isBot -> sprintf "@%s R Bar is dead. Long live R Bar!" sender |> Text |> asyncSeq.Yield
+  | Contains(" Forest Park ") true when not isBot -> sprintf "NYC rule 7" |> Text |> asyncSeq.Yield
   | Contains("Here's a pun:") true -> "shut the fuck up" |> Text |> asyncSeq.Yield
   | _ -> asyncSeq.Zero ()
